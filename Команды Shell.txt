@@ -1,74 +1,88 @@
-1. Импорт моделей
+1. РРјРїРѕСЂС‚ РјРѕРґРµР»РµР№
 from news.models import Author, Category, Post, Comment
-Зачем: Подключение необходимых моделей для работы с базой данных.
+Р—Р°С‡РµРј: РџРѕРґРєР»СЋС‡РµРЅРёРµ РЅРµРѕР±С…РѕРґРёРјС‹С… РјРѕРґРµР»РµР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р±Р°Р·РѕР№ РґР°РЅРЅС‹С….
 
-2. Создание пользователей
+2. РЎРѕР·РґР°РЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
 user1 = User.objects.create_user(username='user1', email='user1@example.com', password='password1')
 user2 = User.objects.create_user(username='user2', email='user2@example.com', password='password2')
-Зачем: Создание двух пользователей через встроенную модель Django User.
+Р—Р°С‡РµРј: РЎРѕР·РґР°РЅРёРµ РґРІСѓС… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ С‡РµСЂРµР· РІСЃС‚СЂРѕРµРЅРЅСѓСЋ РјРѕРґРµР»СЊ Django User.
 
-3. Создание авторов
+3. РЎРѕР·РґР°РЅРёРµ Р°РІС‚РѕСЂРѕРІ
 author1 = Author.objects.create(user=user1)
 author2 = Author.objects.create(user=user2)
-Зачем: Связываем пользователей с авторами через связь «один к одному».
+Р—Р°С‡РµРј: РЎРІСЏР·С‹РІР°РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ СЃ Р°РІС‚РѕСЂР°РјРё С‡РµСЂРµР· СЃРІСЏР·СЊ В«РѕРґРёРЅ Рє РѕРґРЅРѕРјСѓВ».
 
-4. Добавление категорий
-category1 = Category.objects.create(name='Спорт')
-category2 = Category.objects.create(name='Политика')
-category3 = Category.objects.create(name='Образование')
-category4 = Category.objects.create(name='Технологии')
-Зачем: Создаем 4 уникальные категории для статей/новостей.
+4. Р”РѕР±Р°РІР»РµРЅРёРµ РєР°С‚РµРіРѕСЂРёР№
+category1 = Category.objects.create(name='РЎРїРѕСЂС‚')
+category2 = Category.objects.create(name='РџРѕР»РёС‚РёРєР°')
+category3 = Category.objects.create(name='РћР±СЂР°Р·РѕРІР°РЅРёРµ')
+category4 = Category.objects.create(name='РўРµС…РЅРѕР»РѕРіРёРё')
+Р—Р°С‡РµРј: РЎРѕР·РґР°РµРј 4 СѓРЅРёРєР°Р»СЊРЅС‹Рµ РєР°С‚РµРіРѕСЂРёРё РґР»СЏ СЃС‚Р°С‚РµР№/РЅРѕРІРѕСЃС‚РµР№.
 
-5. Создание статей и новости
-post1 = Post.objects.create(author=author1, post_type=Post.ARTICLE, title='Статья 1', text='Текст статьи 1...')
+5. РЎРѕР·РґР°РЅРёРµ СЃС‚Р°С‚РµР№ Рё РЅРѕРІРѕСЃС‚Рё
+post1 = Post.objects.create(author=author1, post_type=Post.ARTICLE, title='РЎС‚Р°С‚СЊСЏ 1', text='РўРµРєСЃС‚ СЃС‚Р°С‚СЊРё 1...')
 
-post2 = Post.objects.create(author=author1, post_type=Post.ARTICLE, title='Статья 2', text='Текст статьи 2...')
+post2 = Post.objects.create(author=author1, post_type=Post.ARTICLE, title='РЎС‚Р°С‚СЊСЏ 2', text='РўРµРєСЃС‚ СЃС‚Р°С‚СЊРё 2...')
 
-post3 = Post.objects.create(author=author2, post_type=Post.NEWS, title='Новость 1', text='Текст новости 1...')
-Зачем:
-* 2 статьи (post_type='ARTICLE') для author1
-* 1 новость (post_type='NEWS') для author2.
+post3 = Post.objects.create(author=author2, post_type=Post.NEWS, title='РќРѕРІРѕСЃС‚СЊ 1', text='РўРµРєСЃС‚ РЅРѕРІРѕСЃС‚Рё 1...')
+Р—Р°С‡РµРј:
+* 2 СЃС‚Р°С‚СЊРё (post_type='ARTICLE') РґР»СЏ author1
+* 1 РЅРѕРІРѕСЃС‚СЊ (post_type='NEWS') РґР»СЏ author2.
 
-6. Присвоение категорий
+6. РџСЂРёСЃРІРѕРµРЅРёРµ РєР°С‚РµРіРѕСЂРёР№
 post1.categories.add(category1, category2)
 post2.categories.add(category3, category4)
 post3.categories.add(category2)
-Зачем: Выполняем условие: хотя бы у одной статьи/новости ?2 категорий.
+Р—Р°С‡РµРј: Р’С‹РїРѕР»РЅСЏРµРј СѓСЃР»РѕРІРёРµ: С…РѕС‚СЏ Р±С‹ Сѓ РѕРґРЅРѕР№ СЃС‚Р°С‚СЊРё/РЅРѕРІРѕСЃС‚Рё ?2 РєР°С‚РµРіРѕСЂРёР№.
 
-7. Создание комментариев
-comment1 = Comment.objects.create(post=post1, author=user1, text='Интересная статья')
-comment2 = Comment.objects.create(post=post2, author=user2, text='Мне понравилось!')
-comment3 = Comment.objects.create(post=post3, author=user1, text='Было полезно')
-comment4 = Comment.objects.create(post=post1, author=user2, text='Классно!')
-Зачем: Создаем 4 комментария к разным постам от разных пользователей.
+7. РЎРѕР·РґР°РЅРёРµ РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ
+comment1 = Comment.objects.create(post=post1, author=user1, text='РРЅС‚РµСЂРµСЃРЅР°СЏ СЃС‚Р°С‚СЊСЏ')
+comment2 = Comment.objects.create(post=post2, author=user2, text='РњРЅРµ РїРѕРЅСЂР°РІРёР»РѕСЃСЊ!')
+comment3 = Comment.objects.create(post=post3, author=user1, text='Р‘С‹Р»Рѕ РїРѕР»РµР·РЅРѕ')
+comment4 = Comment.objects.create(post=post1, author=user2, text='РљР»Р°СЃСЃРЅРѕ!')
+Р—Р°С‡РµРј: РЎРѕР·РґР°РµРј 4 РєРѕРјРјРµРЅС‚Р°СЂРёСЏ Рє СЂР°Р·РЅС‹Рј РїРѕСЃС‚Р°Рј РѕС‚ СЂР°Р·РЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№.
 
-8. Корректировка рейтингов
+8. РљРѕСЂСЂРµРєС‚РёСЂРѕРІРєР° СЂРµР№С‚РёРЅРіРѕРІ
 post1.like()
 post2.dislike()
 comment1.like()
 comment2.dislike()
-Зачем: Изменяем рейтинги через методы like() и dislike().
+Р—Р°С‡РµРј: РР·РјРµРЅСЏРµРј СЂРµР№С‚РёРЅРіРё С‡РµСЂРµР· РјРµС‚РѕРґС‹ like() Рё dislike().
 
-9. Обновление рейтингов авторов
+9. РћР±РЅРѕРІР»РµРЅРёРµ СЂРµР№С‚РёРЅРіРѕРІ Р°РІС‚РѕСЂРѕРІ
 author1.update_rating()
 author2.update_rating()
-Зачем: Вызываем метод для пересчета рейтинга авторов на основе их постов и комментариев.
+Р—Р°С‡РµРј: Р’С‹Р·С‹РІР°РµРј РјРµС‚РѕРґ РґР»СЏ РїРµСЂРµСЃС‡РµС‚Р° СЂРµР№С‚РёРЅРіР° Р°РІС‚РѕСЂРѕРІ РЅР° РѕСЃРЅРѕРІРµ РёС… РїРѕСЃС‚РѕРІ Рё РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ.
 
-10. Вывод лучшего пользователя
+10. Р’С‹РІРѕРґ Р»СѓС‡С€РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 best_author = Author.objects.order_by('-rating').first()
-print(f’Лучший автор: {best_author.user.username}, Рейтинг: {best_author.rating}’)
-Зачем: Сортируем авторов по убыванию рейтинга и выводим данные первого (лучшего).
+print(fвЂ™Р›СѓС‡С€РёР№ Р°РІС‚РѕСЂ: {best_author.user.username}, Р РµР№С‚РёРЅРі: {best_author.rating}вЂ™)
+Р—Р°С‡РµРј: РЎРѕСЂС‚РёСЂСѓРµРј Р°РІС‚РѕСЂРѕРІ РїРѕ СѓР±С‹РІР°РЅРёСЋ СЂРµР№С‚РёРЅРіР° Рё РІС‹РІРѕРґРёРј РґР°РЅРЅС‹Рµ РїРµСЂРІРѕРіРѕ (Р»СѓС‡С€РµРіРѕ).
 
-11. Вывод лучшей статьи
+11. Р’С‹РІРѕРґ Р»СѓС‡С€РµР№ СЃС‚Р°С‚СЊРё
 best_post = Post.objects.order_by('-rating').first()
-print(f’Лучший пост: \nДата: {best_post.created_at .strftime('%Y-%m-%d %H:%M:%S')}, \nАвтор: {best_post.author.user.username}, \nРейтинг: {best_post.rating}, \nЗаголовок: {best_post.title}, \nПревью: {best_post.preview()}’)
-Зачем: Выводим информацию о посте с наибольшим рейтингом, включая превью через метод preview().
+print(fвЂ™Р›СѓС‡С€РёР№ РїРѕСЃС‚: \nР”Р°С‚Р°: {best_post.created_at .strftime('%Y-%m-%d %H:%M:%S')}, \nРђРІС‚РѕСЂ: {best_post.author.user.username}, \nР РµР№С‚РёРЅРі: {best_post.rating}, \nР—Р°РіРѕР»РѕРІРѕРє: {best_post.title}, \nРџСЂРµРІСЊСЋ: {best_post.preview()}вЂ™)
+Р—Р°С‡РµРј: Р’С‹РІРѕРґРёРј РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїРѕСЃС‚Рµ СЃ РЅР°РёР±РѕР»СЊС€РёРј СЂРµР№С‚РёРЅРіРѕРј, РІРєР»СЋС‡Р°СЏ РїСЂРµРІСЊСЋ С‡РµСЂРµР· РјРµС‚РѕРґ preview().
 
-12. Вывод комментариев к лучшей статье
+12. Р’С‹РІРѕРґ РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ Рє Р»СѓС‡С€РµР№ СЃС‚Р°С‚СЊРµ
 for comment in best_post.comments.all():
-    print(f'Комментарий: \nДата: {comment.created_at.strftime('%Y-%m-%d %H:%M:%S')}, \nПользователь: {comment.author.username}, \nРейтинг: {comment.rating}, \nТекст: {comment.text}')
-Зачем: Показываем все комментарии к статье с наивысшим рейтингом.
+    print(f'РљРѕРјРјРµРЅС‚Р°СЂРёР№: \nР”Р°С‚Р°: {comment.created_at.strftime('%Y-%m-%d %H:%M:%S')}, \nРџРѕР»СЊР·РѕРІР°С‚РµР»СЊ: {comment.author.username}, \nР РµР№С‚РёРЅРі: {comment.rating}, \nРўРµРєСЃС‚: {comment.text}')
+Р—Р°С‡РµРј: РџРѕРєР°Р·С‹РІР°РµРј РІСЃРµ РєРѕРјРјРµРЅС‚Р°СЂРёРё Рє СЃС‚Р°С‚СЊРµ СЃ РЅР°РёРІС‹СЃС€РёРј СЂРµР№С‚РёРЅРіРѕРј.
 
-Примечания:
-* Все команды выполняются последовательно в Django shell (запускается через python manage.py shell).
+РџСЂРёРјРµС‡Р°РЅРёСЏ:
+* Р’СЃРµ РєРѕРјР°РЅРґС‹ РІС‹РїРѕР»РЅСЏСЋС‚СЃСЏ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕ РІ Django shell (Р·Р°РїСѓСЃРєР°РµС‚СЃСЏ С‡РµСЂРµР· python manage.py shell).
+
+
+11. Г‚Г»ГўГ®Г¤ Г«ГіГ·ГёГҐГ© Г±ГІГ ГІГјГЁ
+best_post = Post.objects.order_by('-rating').first()
+print(fвЂ™Г‹ГіГ·ГёГЁГ© ГЇГ®Г±ГІ: \nГ„Г ГІГ : {best_post.created_at .strftime('%Y-%m-%d %H:%M:%S')}, \nГЂГўГІГ®Г°: {best_post.author.user.username}, \nГђГҐГ©ГІГЁГ­ГЈ: {best_post.rating}, \nГ‡Г ГЈГ®Г«Г®ГўГ®ГЄ: {best_post.title}, \nГЏГ°ГҐГўГјГѕ: {best_post.preview()}вЂ™)
+Г‡Г Г·ГҐГ¬:В Г‚Г»ГўГ®Г¤ГЁГ¬ ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГѕ Г® ГЇГ®Г±ГІГҐ Г± Г­Г ГЁГЎГ®Г«ГјГёГЁГ¬ Г°ГҐГ©ГІГЁГ­ГЈГ®Г¬, ГўГЄГ«ГѕГ·Г Гї ГЇГ°ГҐГўГјГѕ Г·ГҐГ°ГҐГ§ Г¬ГҐГІГ®Г¤В preview().
+
+12. Г‚Г»ГўГ®Г¤ ГЄГ®Г¬Г¬ГҐГ­ГІГ Г°ГЁГҐГў ГЄ Г«ГіГ·ГёГҐГ© Г±ГІГ ГІГјГҐ
+for comment in best_post.comments.all():
+    print(f'ГЉГ®Г¬Г¬ГҐГ­ГІГ Г°ГЁГ©: \nГ„Г ГІГ : {comment.created_at.strftime('%Y-%m-%d %H:%M:%S')}, \nГЏГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гј: {comment.author.username}, \nГђГҐГ©ГІГЁГ­ГЈ: {comment.rating}, \nГ’ГҐГЄГ±ГІ: {comment.text}')
+Г‡Г Г·ГҐГ¬:В ГЏГ®ГЄГ Г§Г»ГўГ ГҐГ¬ ГўГ±ГҐ ГЄГ®Г¬Г¬ГҐГ­ГІГ Г°ГЁГЁ ГЄ Г±ГІГ ГІГјГҐ Г± Г­Г ГЁГўГ»Г±ГёГЁГ¬ Г°ГҐГ©ГІГЁГ­ГЈГ®Г¬.
+
+ГЏГ°ГЁГ¬ГҐГ·Г Г­ГЁГї:
+* Г‚Г±ГҐ ГЄГ®Г¬Г Г­Г¤Г» ГўГ»ГЇГ®Г«Г­ГїГѕГІГ±Гї ГЇГ®Г±Г«ГҐГ¤Г®ГўГ ГІГҐГ«ГјГ­Г® Гў Django shell (Г§Г ГЇГіГ±ГЄГ ГҐГІГ±Гї Г·ГҐГ°ГҐГ§В python manage.py shell).
 
