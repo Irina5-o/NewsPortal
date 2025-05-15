@@ -1,0 +1,74 @@
+1. Импорт моделей
+from news.models import Author, Category, Post, Comment
+Зачем: Подключение необходимых моделей для работы с базой данных.
+
+2. Создание пользователей
+user1 = User.objects.create_user(username='user1', email='user1@example.com', password='password1')
+user2 = User.objects.create_user(username='user2', email='user2@example.com', password='password2')
+Зачем: Создание двух пользователей через встроенную модель Django User.
+
+3. Создание авторов
+author1 = Author.objects.create(user=user1)
+author2 = Author.objects.create(user=user2)
+Зачем: Связываем пользователей с авторами через связь «один к одному».
+
+4. Добавление категорий
+category1 = Category.objects.create(name='Спорт')
+category2 = Category.objects.create(name='Политика')
+category3 = Category.objects.create(name='Образование')
+category4 = Category.objects.create(name='Технологии')
+Зачем: Создаем 4 уникальные категории для статей/новостей.
+
+5. Создание статей и новости
+post1 = Post.objects.create(author=author1, post_type=Post.ARTICLE, title='Статья 1', text='Текст статьи 1...')
+
+post2 = Post.objects.create(author=author1, post_type=Post.ARTICLE, title='Статья 2', text='Текст статьи 2...')
+
+post3 = Post.objects.create(author=author2, post_type=Post.NEWS, title='Новость 1', text='Текст новости 1...')
+Зачем:
+* 2 статьи (post_type='ARTICLE') для author1
+* 1 новость (post_type='NEWS') для author2.
+
+6. Присвоение категорий
+post1.categories.add(category1, category2)
+post2.categories.add(category3, category4)
+post3.categories.add(category2)
+Зачем: Выполняем условие: хотя бы у одной статьи/новости ?2 категорий.
+
+7. Создание комментариев
+comment1 = Comment.objects.create(post=post1, author=user1, text='Интересная статья')
+comment2 = Comment.objects.create(post=post2, author=user2, text='Мне понравилось!')
+comment3 = Comment.objects.create(post=post3, author=user1, text='Было полезно')
+comment4 = Comment.objects.create(post=post1, author=user2, text='Классно!')
+Зачем: Создаем 4 комментария к разным постам от разных пользователей.
+
+8. Корректировка рейтингов
+post1.like()
+post2.dislike()
+comment1.like()
+comment2.dislike()
+Зачем: Изменяем рейтинги через методы like() и dislike().
+
+9. Обновление рейтингов авторов
+author1.update_rating()
+author2.update_rating()
+Зачем: Вызываем метод для пересчета рейтинга авторов на основе их постов и комментариев.
+
+10. Вывод лучшего пользователя
+best_author = Author.objects.order_by('-rating').first()
+print(f’Лучший автор: {best_author.user.username}, Рейтинг: {best_author.rating}’)
+Зачем: Сортируем авторов по убыванию рейтинга и выводим данные первого (лучшего).
+
+11. Вывод лучшей статьи
+best_post = Post.objects.order_by('-rating').first()
+print(f’Лучший пост: \nДата: {best_post.created_at .strftime('%Y-%m-%d %H:%M:%S')}, \nАвтор: {best_post.author.user.username}, \nРейтинг: {best_post.rating}, \nЗаголовок: {best_post.title}, \nПревью: {best_post.preview()}’)
+Зачем: Выводим информацию о посте с наибольшим рейтингом, включая превью через метод preview().
+
+12. Вывод комментариев к лучшей статье
+for comment in best_post.comments.all():
+    print(f'Комментарий: \nДата: {comment.created_at.strftime('%Y-%m-%d %H:%M:%S')}, \nПользователь: {comment.author.username}, \nРейтинг: {comment.rating}, \nТекст: {comment.text}')
+Зачем: Показываем все комментарии к статье с наивысшим рейтингом.
+
+Примечания:
+* Все команды выполняются последовательно в Django shell (запускается через python manage.py shell).
+
