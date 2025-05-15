@@ -72,17 +72,3 @@ for comment in best_post.comments.all():
 Примечания:
 * Все команды выполняются последовательно в Django shell (запускается через python manage.py shell).
 
-
-11. Âûâîä ëó÷øåé ñòàòüè
-best_post = Post.objects.order_by('-rating').first()
-print(f’Ëó÷øèé ïîñò: \nÄàòà: {best_post.created_at .strftime('%Y-%m-%d %H:%M:%S')}, \nÀâòîð: {best_post.author.user.username}, \nÐåéòèíã: {best_post.rating}, \nÇàãîëîâîê: {best_post.title}, \nÏðåâüþ: {best_post.preview()}’)
-Çà÷åì: Âûâîäèì èíôîðìàöèþ î ïîñòå ñ íàèáîëüøèì ðåéòèíãîì, âêëþ÷àÿ ïðåâüþ ÷åðåç ìåòîä preview().
-
-12. Âûâîä êîììåíòàðèåâ ê ëó÷øåé ñòàòüå
-for comment in best_post.comments.all():
-    print(f'Êîììåíòàðèé: \nÄàòà: {comment.created_at.strftime('%Y-%m-%d %H:%M:%S')}, \nÏîëüçîâàòåëü: {comment.author.username}, \nÐåéòèíã: {comment.rating}, \nÒåêñò: {comment.text}')
-Çà÷åì: Ïîêàçûâàåì âñå êîììåíòàðèè ê ñòàòüå ñ íàèâûñøèì ðåéòèíãîì.
-
-Ïðèìå÷àíèÿ:
-* Âñå êîìàíäû âûïîëíÿþòñÿ ïîñëåäîâàòåëüíî â Django shell (çàïóñêàåòñÿ ÷åðåç python manage.py shell).
-
